@@ -59,13 +59,12 @@ STATUS_ACIN=$(($(($REG&0x80))/128))
 STATUS_ACIN_AVAIL=$(($(($REG&0x40))/64))
 STATUS_VBUS=$(($(($REG&0x20))/32))
 STATUS_VBUS_AVAIL=$(($(($REG&0x10))/16))
-STATUS_VHOLD=$(($(($REG&0x08))/8))			# SKIPPED "Indicating whether the VBUS voltage is above VHOLD before used."
+STATUS_VHOLD=$(($(($REG&0x08))/8))
 STATUS_CHG_DIR=$(($(($REG&0x04))/4))
 ACVB_SHORT=$(($(($REG&0x02))/2))
 STATUS_BOOT=$(($REG&0x01))
 
 
-#echo "Reg00:	$REG";
 if [ $ALL ];then
 	REG=$(i2cget -y -f 0 0x34 0x30)
 	VHOLD="4."$(($(($REG&0x38))/8))
@@ -90,7 +89,7 @@ if [ $ALL ];then
 	echo "              ACIN: $STATUS_ACIN	Avail: $STATUS_ACIN_AVAIL"
 	echo "              VBUS: $STATUS_VBUS	Avail: $STATUS_VBUS_AVAIL"
 	echo "             VHOLD: $STATUS_VHOLD (Whether VBUS is above $VHOLD""V before being used)"
-#	echo "  Charge direction: $STATUS_CHG_DIR	(0:Battery discharging; 1:The battery is charging)"
+	#echo "  Charge direction: $STATUS_CHG_DIR	(0:Battery discharging; 1:The battery is charging)"
 	echo "  Shutdown voltage: $VSHUTDOWN"V""
 	echo "VBUS current limit: $VBUS_C_LIM"
 
@@ -119,7 +118,6 @@ STATUS_CUREXPEC=$(($(($REG&0x04))/4))
 #STATUS_=$(($(($REG&0x02))/2))
 #STATUS_=$(($REG&0x01))
 
-#echo " Over Temperature: $STATUS_OVRTEMP"
 if [ $STATUS_OVRTEMP == 1 ]; then
 	echo "Over Temperature"
 fi
